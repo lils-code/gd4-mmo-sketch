@@ -2,9 +2,10 @@ extends CharacterBody3D
 
 @onready var cam_center = $cam_center
 @onready var arm = $cam_center/arm
-@onready var cam = $cam_center/camera
+@onready var cam = $cam_center/arm/camera
 
 const sens = 0.8
+var arm_len = 5
 
 const speed = 5
 const accel = 0.5
@@ -27,7 +28,8 @@ const snap_weight = 0.05
 var prev_cap = false
 var mouse_vel = Vector2.ZERO
 var mouse_pos = Vector2.ZERO
-
+var min_arm_len = 2
+var max_arm_len = 7.5
 var total_y_rot = 0
 
 enum move_types {
@@ -46,6 +48,13 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		rot(event)
 	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			arm_len -= 0.15
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			arm_len += 0.15
+		arm_len = clamp(arm_len, min_arm_len, max_arm_len)
+		arm.spring_length = arm_len
+		
 		rot(InputEventMouseMotion.new())
 
 func _physics_process(delta):
@@ -61,10 +70,13 @@ func rot(event):
 		prev_cap = true
 		
 		var rot_y = sens * (-event.relative.y / 500)
+		var y_calc = total_y_rot + rot_y
+		y_calc = clamp(y_calc, -0.4 * PI, 0.2 * PI)
+		rot_y -= rot_y - (y_calc - total_y_rot)
 		
-		if total_y_rot + rot_y < 0.25 * PI and total_y_rot + rot_y > -0.4 * PI:
-			cam_center.rotate(cam_center.transform.basis.x, rot_y)
-			total_y_rot += rot_y
+		cam_center.rotate(cam_center.transform.basis.x, rot_y)
+		
+		total_y_rot += rot_y
 		
 		var rot_x = sens * (-event.relative.x / 500)
 		
@@ -92,13 +104,6 @@ func rot(event):
 			move_type = move_types.DEFAULT
 			
 		mouse_pos = get_viewport().get_mouse_position()
-	
-	collide()
-
-func collide():
-	print(ray.get_collision_point())
-	#var space_state = get_world().direct_space_state
-	pass
 
 func y_vel(delta):
 	var flrtest = is_on_floor()

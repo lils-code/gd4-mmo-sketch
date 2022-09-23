@@ -27,5 +27,7 @@ mesh = SubResource("BoxMesh_oqkvm")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="arm" type="SpringArm3D" parent="cam_center"]
+spring_length = 5.0
 
-[node name="camera" type="Camera3D" parent="cam_center"]
+[node name="camera" type="Camera3D" parent="cam_center/arm"]
+fov = 90.0
