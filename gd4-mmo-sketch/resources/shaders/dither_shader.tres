@@ -1,0 +1,9 @@
+[gd_resource type="VisualShader" format=3 uid="uid://bx6fifjf2m802"]
+
+[resource]
+code = "shader_type spatial;
+
+
+"
+graph_offset = Vector2(-279.988, 20.1048)
+nodes/fragment/0/position = Vector2(560, 80)

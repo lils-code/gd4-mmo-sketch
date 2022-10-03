@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://0gtu0yqb1xex"]
+
+[ext_resource type="Shader" uid="uid://bx6fifjf2m802" path="res://resources/shaders/dither_shader.tres" id="1_olnmc"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_olnmc")

@@ -1,29 +1,18 @@
 extends CharacterBody3D
 
+var movement = preload("res://scenes/main/movement.gd").new()
+
 @onready var cam_center = $cam_center
 @onready var arm = $cam_center/arm
 @onready var cam = $cam_center/arm/camera
+@onready var ray = $cam_center/arm/camera/ray
 
-const sens = 0.8
+var sens = 1
+var key_turn_sens = 0.45
 var arm_len = 5
 
-const speed = 5
-const accel = 0.5
-
-var cur_accel = 0
-
-const gravity = 19
-
-const jump_vel = 15
-const jump_len = 0.25
-const jump_fall_off = 0.2
-const jump_over_shoot = 0.2
-
-var cur_jump_len = 0
-var jump = false
-
 const rot_speed = 0.03
-const snap_weight = 0.05
+const snap_weight = 0.08
 
 var prev_cap = false
 var mouse_vel = Vector2.ZERO
@@ -40,124 +29,118 @@ enum move_types {
 
 var move_type = move_types.DEFAULT
 
+var m1_just_pressed = 0
+var m1_displacement = 0
+var m1_hold = false
+
 func short_angle_dist(from, to):
 	var dif = fmod(to - from, PI * 2)
 	return fmod(2 * dif, PI * 2) - dif
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		rot(event)
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			arm_len -= 0.15
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			arm_len += 0.15
-		arm_len = clamp(arm_len, min_arm_len, max_arm_len)
-		arm.spring_length = arm_len
+		if move_type == move_types.DEFAULT:
+			mouse_pos = event.global_position
 		
-		rot(InputEventMouseMotion.new())
+		if Input.is_action_pressed('m2'):
+			movement.rot(self, Vector3.UP, sens * event.relative.x / -750, 0)
+		if m1_hold:
+			cam_center.rotate(Vector3.UP, sens * event.relative.x / -330)
+		if Input.is_action_pressed('m1') || Input.is_action_pressed('m2'):
+			var y_rot = sens * event.relative.y / -330
+			y_rot = clamp(total_y_rot + y_rot, -0.4 * PI, 0.1 * PI) - total_y_rot
+			total_y_rot += y_rot
+			
+			cam_center.rotate(cam_center.transform.basis.x, y_rot)
+
+func _process(delta):
+	move_type = move_types.DEFAULT
+	
+	if Input.is_action_pressed('shift'):
+		move_type = move_types.STRAFE
+	
+	if Input.is_action_pressed('m2'):
+		move_type = move_types.STRAFE
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		if cam_center.rotation.y != 0:
+			rotation.y = cam_center.global_rotation.y
+			cam_center.rotation.y = 0
+		if Input.is_action_pressed('m1'):
+			move_type = move_types.MOUSE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+	
+	if Input.is_action_just_released('m2'):
+		Input.warp_mouse(mouse_pos)
+	
+	if Input.is_action_just_pressed('m1'):
+		m1_just_pressed = 0
+		m1_displacement = 0
+	elif Input.is_action_pressed('m1'):
+		m1_just_pressed += 1
+		m1_displacement += sqrt(abs(Input.get_last_mouse_velocity().length()))
+		
+		if m1_just_pressed >= 25 || m1_displacement >= 100:
+			if !Input.is_action_pressed('m2'):
+				m1_hold = true
+	elif Input.is_action_just_released('m1'):
+		m1_hold = false
+		if m1_just_pressed < 25 && m1_displacement < 100:
+			if !Input.is_action_pressed('m2'):
+				target()
+	
+	if (Input.is_key_pressed(KEY_ESCAPE)):
+		get_tree().quit()
 
 func _physics_process(delta):
-	y_vel(delta)
-
-	xz_vel(delta)
+	var jump_state = Vector2(Input.is_action_just_pressed('jump'), Input.is_action_pressed('jump'))
+	velocity.y = movement.y_vel(self, jump_state, delta)
+	
+	var input_dir = Input.get_vector('left', 'right', 'forward', 'back')
+	
+	if move_type == move_types.DEFAULT:
+		movement.rot(self, Vector3.UP, -input_dir.x * (key_turn_sens / 10), delta)
+		if input_dir.x != 0 && !Input.is_action_pressed('m1'):
+			center_cam()
+		input_dir.x = 0
+	elif move_type == move_types.MOUSE:
+		input_dir.y = -1
+	
+	var xz = movement.xz_vel(self, input_dir, move_type, delta)
+	velocity.x = xz.x
+	velocity.z = xz.y
+	
+	if !Input.is_action_pressed('m1') && xz != Vector2.ZERO:
+		center_player()
 	
 	move_and_slide()
 
-func rot(event):
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MASK_LEFT) or Input.is_mouse_button_pressed(MOUSE_BUTTON_MASK_RIGHT):
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		prev_cap = true
-		
-		var rot_y = sens * (-event.relative.y / 500)
-		var y_calc = total_y_rot + rot_y
-		y_calc = clamp(y_calc, -0.4 * PI, 0.2 * PI)
-		rot_y -= rot_y - (y_calc - total_y_rot)
-		
-		cam_center.rotate(cam_center.transform.basis.x, rot_y)
-		
-		total_y_rot += rot_y
-		
-		var rot_x = sens * (-event.relative.x / 500)
-		
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MASK_RIGHT):
-			if cam_center.global_rotation.y != 0:
-				rotation.y = cam_center.global_rotation.y
-				cam_center.rotation.y = 0
-			
-			rotate_y(rot_x)
-			
-			move_type = move_types.STRAFE
-		else:
-			cam_center.rotate_y(rot_x)
-			
-			move_type = move_types.DEFAULT
-		
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MASK_LEFT) and Input.is_mouse_button_pressed(MOUSE_BUTTON_MASK_RIGHT):
-			move_type = move_types.MOUSE
+func center_cam():
+	if abs(cam_center.rotation.y) > 0.01:
+		cam_center.rotate_y(short_angle_dist(cam_center.rotation.y, 0) * snap_weight)
 	else:
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		
-		if prev_cap:
-			Input.warp_mouse(mouse_pos)
-			prev_cap = false
-			move_type = move_types.DEFAULT
-			
-		mouse_pos = get_viewport().get_mouse_position()
+		cam_center.rotation.y = 0
 
-func y_vel(delta):
-	var flrtest = is_on_floor()
-	
-	if flrtest:
-		jump = false
-		if Input.is_action_just_pressed('jump'):
-			jump = true
-			cur_jump_len = 0
-			velocity.y = jump_vel
+func center_player():
+	if abs(cam_center.rotation.y) > 0.01:
+		rotation.y = rotation.y + (cam_center.rotation.y * snap_weight)
+		cam_center.rotation.y -= (cam_center.rotation.y * snap_weight)
 	else:
-		if jump and not Input.is_action_pressed('jump'):
-			jump = false
-	
-	if jump:
-		if cur_jump_len < jump_len:
-			velocity.y = jump_vel - ((jump_vel * pow(cur_jump_len, jump_fall_off)) / pow(jump_len + jump_over_shoot, jump_fall_off))
-		else:
-			jump = false
-		
-		cur_jump_len += delta
-	
-	if not flrtest and not jump:
-		if Input.is_action_just_released('jump'):
-			velocity.y *= 0.66
-		
-		velocity.y -= gravity * delta
+		rotation.y = cam_center.global_rotation.y
+		cam_center.rotation.y = 0
 
-func xz_vel(delta):
-	var input_dir = Input.get_vector('left', 'right', 'forward', 'back')
-	var scl = input_dir
-	
-	if move_type == move_types.DEFAULT:
-		rotate_y(rot_speed * (-1 * scl.x))
-		scl.x = 0
-	elif move_type == move_types.MOUSE:
-		scl.y = -1
-	
-	var dir = (transform.basis * Vector3(scl.x, 0, scl.y)).normalized()
-	
-	if dir == Vector3.ZERO:
-		cur_accel -= accel
-	else:
-		cur_accel += accel
-	
-	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_MASK_LEFT) and abs(cam_center.rotation.y) != 0 and input_dir != Vector2.ZERO:
-		if abs(cam_center.rotation.y) > 0.01:
-			cam_center.rotate_y(short_angle_dist(cam_center.rotation.y, 0) * snap_weight)
+func target():
+	var space_state = get_world_3d().direct_space_state
+	var params = PhysicsRayQueryParameters3D.new()
+	params.collide_with_areas = true
+	params.from = cam.global_position
+	params.to = cam.project_position(mouse_pos, 100)
+	params.collision_mask = 4
+	var r = space_state.intersect_ray(params)
+	if r:
+		if r.collider.get_class() == 'Area3D':
+			print(r.collider.get_class())
 		else:
-			cam_center.rotation.y = 0
-	
-	if dir.z > 0:
-		dir.z *= 0.5
-	
-	cur_accel = clamp(cur_accel, 0, speed)
-	velocity.x = dir.x * cur_accel
-	velocity.z = dir.z * cur_accel
+			print('miss')
+	else:
+		print('miss')

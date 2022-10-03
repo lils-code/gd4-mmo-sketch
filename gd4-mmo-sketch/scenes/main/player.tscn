@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://1nggsodab2he"]
+[gd_scene load_steps=8 format=3 uid="uid://b2awq5n5qvtqo"]
 
 [ext_resource type="Script" path="res://scenes/main/player.gd" id="1_mc4xt"]
+[ext_resource type="PackedScene" uid="uid://bpil0nlemgdgi" path="res://scenes/main/gui.tscn" id="2_rt0oq"]
+[ext_resource type="PackedScene" uid="uid://dj26sacnhty4r" path="res://addons/devblocks/blocks/basic_block.tscn" id="3_8bg2a"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8il0v"]
 
@@ -8,9 +10,15 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_oqkvm"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_kx2g6"]
+size = Vector3(1, 2, 1)
+
 [node name="player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_mask = 32768
 script = ExtResource("1_mc4xt")
+
+[node name="gui" parent="." instance=ExtResource("2_rt0oq")]
 
 [node name="collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_8il0v")
@@ -23,11 +31,26 @@ skeleton = NodePath("../..")
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.5, 0, 0.5, -0.5)
 mesh = SubResource("BoxMesh_oqkvm")
 
+[node name="area" type="Area3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+collision_layer = 4
+collision_mask = 8
+
+[node name="shape" type="CollisionShape3D" parent="area"]
+shape = SubResource("BoxShape3D_kx2g6")
+
 [node name="cam_center" type="Position3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="arm" type="SpringArm3D" parent="cam_center"]
+collision_mask = 32768
 spring_length = 5.0
 
 [node name="camera" type="Camera3D" parent="cam_center/arm"]
 fov = 90.0
+
+[node name="BasicBlock" parent="." instance=ExtResource("3_8bg2a")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+collision_layer = 0
+collision_mask = 0
+block_style = 3

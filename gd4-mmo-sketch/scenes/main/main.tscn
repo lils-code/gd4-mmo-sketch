@@ -1,24 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkbmqvr5lnt5v"]
+[gd_scene load_steps=4 format=3 uid="uid://cxr34m0js07qo"]
 
-[ext_resource type="PackedScene" uid="uid://1nggsodab2he" path="res://scenes/main/player.tscn" id="1_quoq5"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_y4lby"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_74v1s"]
+[ext_resource type="PackedScene" uid="uid://b2awq5n5qvtqo" path="res://scenes/main/player.tscn" id="1_quoq5"]
+[ext_resource type="PackedScene" uid="uid://8ukw2pkmh647" path="res://scenes/main/entity.tscn" id="2_5rdwg"]
+[ext_resource type="PackedScene" uid="uid://camvcri7e11vi" path="res://addons/devblocks/blocks/colored_block.tscn" id="3_tcquj"]
 
 [node name="Node" type="Node"]
 
 [node name="player" parent="." instance=ExtResource("1_quoq5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13257, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 
-[node name="tmp floor" type="StaticBody3D" parent="."]
-transform = Transform3D(8.5, 0, 0, 0, 0.1, 0, 0, 0, 8.5, 0, 0, 0)
+[node name="entity" parent="." instance=ExtResource("2_5rdwg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -4)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="tmp floor"]
-shape = SubResource("BoxShape3D_y4lby")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="tmp floor/CollisionShape3D"]
-mesh = SubResource("BoxMesh_74v1s")
+[node name="ColoredBlock" parent="." instance=ExtResource("3_tcquj")]
+transform = Transform3D(10, 0, 0, 0, 0.1, 0, 0, 0, 10, 0, 0, 0)
+disable_mode = 1
+collision_layer = 65535
+collision_mask = 65535
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
