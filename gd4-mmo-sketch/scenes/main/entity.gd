@@ -1,9 +1,13 @@
-extends CharacterBody3D
+@tool
+extends EditorScript
 
-var movement = preload("res://scenes/main/movement.gd").new()
+var components = []
 
-func _physics_process(delta):
-	var jump_state = Vector2(false, false)
-	velocity.y = movement.y_vel(self, jump_state, delta)
+func _process(delta):
+	pass
 
-	move_and_slide()
+func get_class():
+	print('entity')
+
+func _add_component(node):
+	components.append(node)

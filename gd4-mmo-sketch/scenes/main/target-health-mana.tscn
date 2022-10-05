@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://t6vhr8x3mv0f"]
+
+[node name="target-health-mana" type="ColorRect"]
+anchor_left = 0.387
+anchor_top = 0.1
+anchor_right = 1.0
+anchor_bottom = 0.687
+offset_left = -0.125015
+offset_top = 5.0
+offset_bottom = 1.95
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.215686, 0.215686, 0.215686, 1)
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true
+
+[node name="name label" type="Control" parent="."]
+anchor_left = 0.022
+anchor_top = 0.059
+anchor_right = 0.978
+anchor_bottom = 0.235
+offset_left = -0.0600004
+offset_top = -0.0150003
+offset_right = 0.0599823
+offset_bottom = 0.0249996
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true
+
+[node name="bg2" type="ColorRect" parent="name label"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.972549, 0.972549, 0.972549, 1)
+metadata/_edit_layout_mode = 1
+
+[node name="name" type="Label" parent="name label"]
+clip_contents = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -9.0
+offset_right = 2.0
+offset_bottom = 7.105
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "test name"
+vertical_alignment = 1
+clip_text = true
+metadata/_edit_layout_mode = 1
+
+[node name="health bar" type="Control" parent="."]
+anchor_left = 0.022
+anchor_top = 0.294
+anchor_right = 0.978
+anchor_bottom = 0.706
+offset_left = -0.0600004
+offset_top = 0.0100002
+offset_right = 0.0599823
+offset_bottom = -0.0100021
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true
+
+[node name="bg" type="ColorRect" parent="health bar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.972549, 0.972549, 0.972549, 1)
+
+[node name="bar" type="ColorRect" parent="health bar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_vertical = 2
+color = Color(0, 0.635294, 0.384314, 1)
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true
+
+[node name="mana bar" type="Control" parent="."]
+anchor_left = 0.022
+anchor_top = 0.753
+anchor_right = 0.978
+anchor_bottom = 0.929
+offset_left = -0.0600004
+offset_top = 0.994995
+offset_right = 0.0599823
+offset_bottom = 1.035
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true
+
+[node name="bg" type="ColorRect" parent="mana bar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.972549, 0.972549, 0.972549, 1)
+
+[node name="bar" type="ColorRect" parent="mana bar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_vertical = 2
+color = Color(0.231373, 0.235294, 0.772549, 1)
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true

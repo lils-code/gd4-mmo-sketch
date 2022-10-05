@@ -1,102 +1,39 @@
-[gd_scene load_steps=2 format=3 uid="uid://cphbmugnsurqd"]
+[gd_scene load_steps=3 format=3 uid="uid://cphbmugnsurqd"]
 
+[ext_resource type="PackedScene" uid="uid://t6vhr8x3mv0f" path="res://scenes/main/target-health-mana.tscn" id="1_21w26"]
 [ext_resource type="Texture2D" uid="uid://yy5uf5su7iuk" path="res://resources/textures/gui/lil-shep.png" id="1_er10v"]
 
 [node name="target panel" type="Control"]
-anchor_right = 0.195
-anchor_bottom = 0.125
-offset_right = 0.319992
+anchor_right = 0.366
+anchor_bottom = 0.25
+offset_right = 0.215973
+scale = Vector2(0.75, 0.75)
 size_flags_horizontal = 0
+mouse_filter = 1
 metadata/_edit_use_custom_anchors = true
 
-[node name="bg" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color(0.215686, 0.215686, 0.215686, 1)
+[node name="target-health-mana" parent="." instance=ExtResource("1_21w26")]
 
-[node name="icon" type="TextureRect" parent="."]
-anchor_left = 0.025
-anchor_top = 0.067
-anchor_right = 0.35
-anchor_bottom = 0.933
-offset_top = -0.0250001
-offset_bottom = 0.0250015
+[node name="bg2" type="ColorRect" parent="."]
+anchor_right = 0.4
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.215686, 0.215686, 0.215686, 1)
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = true
+
+[node name="icon" type="TextureRect" parent="bg2"]
+anchor_left = 0.033
+anchor_top = 0.033
+anchor_right = 0.967
+anchor_bottom = 0.967
+offset_left = 0.0500002
+offset_top = 0.0500002
+offset_right = -0.0500031
+offset_bottom = -0.0500031
 grow_vertical = 2
 texture = ExtResource("1_er10v")
 ignore_texture_size = true
-metadata/_edit_layout_mode = 1
-metadata/_edit_use_custom_anchors = true
-
-[node name="name label" type="Control" parent="."]
-anchor_left = 0.375
-anchor_top = 0.08
-anchor_right = 0.975
-anchor_bottom = 0.2
-offset_top = -1.0
-metadata/_edit_layout_mode = 1
-metadata/_edit_use_custom_anchors = true
-
-[node name="bg2" type="ColorRect" parent="name label"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color(0.972549, 0.972549, 0.972549, 1)
-
-[node name="name" type="Label" parent="name label"]
-clip_contents = true
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 2.5
-offset_top = -1.0
-offset_right = 2.5
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-text = "name"
-clip_text = true
-metadata/_edit_layout_mode = 1
-
-[node name="health bar" type="Control" parent="."]
-anchor_left = 0.375
-anchor_top = 0.253
-anchor_right = 0.975
-anchor_bottom = 0.4
-offset_top = 1.025
-metadata/_edit_layout_mode = 1
-metadata/_edit_use_custom_anchors = true
-
-[node name="bg" type="ColorRect" parent="health bar"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color(0.972549, 0.972549, 0.972549, 1)
-
-[node name="bar" type="ColorRect" parent="health bar"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_vertical = 2
-color = Color(1, 0, 0, 1)
-metadata/_edit_layout_mode = 1
-metadata/_edit_use_custom_anchors = true
-
-[node name="mana bar" type="Control" parent="."]
-anchor_left = 0.375
-anchor_top = 0.467
-anchor_right = 0.975
-anchor_bottom = 0.6
-offset_top = -0.0250015
-metadata/_edit_layout_mode = 1
-metadata/_edit_use_custom_anchors = true
-
-[node name="bg" type="ColorRect" parent="mana bar"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color(0.972549, 0.972549, 0.972549, 1)
-
-[node name="bar" type="ColorRect" parent="mana bar"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_vertical = 2
-color = Color(0, 0, 1, 1)
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = true

@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxr34m0js07qo"]
+[gd_scene load_steps=10 format=3 uid="uid://cxr34m0js07qo"]
 
 [ext_resource type="PackedScene" uid="uid://b2awq5n5qvtqo" path="res://scenes/main/player.tscn" id="1_quoq5"]
 [ext_resource type="PackedScene" uid="uid://8ukw2pkmh647" path="res://scenes/main/entity.tscn" id="2_5rdwg"]
+[ext_resource type="PackedScene" uid="uid://cmg6jwu6js2v2" path="res://scenes/instances/targetable.tscn" id="3_miimg"]
 [ext_resource type="PackedScene" uid="uid://camvcri7e11vi" path="res://addons/devblocks/blocks/colored_block.tscn" id="3_tcquj"]
+[ext_resource type="PackedScene" uid="uid://btjqe7xyf2114" path="res://scenes/instances/static.tscn" id="4_m2pd0"]
+[ext_resource type="PackedScene" uid="uid://bf1ggosfvjdv3" path="res://scenes/instances/visible.tscn" id="5_8vwb1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_osafg"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3lmu0"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_taj00"]
 
 [node name="Node" type="Node"]
 
@@ -10,7 +19,46 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 
 [node name="entity" parent="." instance=ExtResource("2_5rdwg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="targetable" parent="entity" instance=ExtResource("3_miimg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target = NodePath("..")
+
+[node name="target_shape" type="CollisionShape3D" parent="entity/targetable"]
+transform = Transform3D(1.333, 0, 0, 0, 1.333, 0, 0, 0, 1.333, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_osafg")
+
+[node name="visible" parent="entity" instance=ExtResource("5_8vwb1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_3lmu0")
+
+[node name="static" parent="entity" instance=ExtResource("4_m2pd0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="col" type="CollisionShape3D" parent="entity/static"]
+shape = SubResource("CapsuleShape3D_taj00")
+
+[node name="entity2" parent="." instance=ExtResource("2_5rdwg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="targetable" parent="entity2" instance=ExtResource("3_miimg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target = NodePath("..")
+
+[node name="target_shape" type="CollisionShape3D" parent="entity2/targetable"]
+transform = Transform3D(1.333, 0, 0, 0, 1.333, 0, 0, 0, 1.333, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_osafg")
+
+[node name="visible" parent="entity2" instance=ExtResource("5_8vwb1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_3lmu0")
+
+[node name="static" parent="entity2" instance=ExtResource("4_m2pd0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="col" type="CollisionShape3D" parent="entity2/static"]
+shape = SubResource("CapsuleShape3D_taj00")
 
 [node name="ColoredBlock" parent="." instance=ExtResource("3_tcquj")]
 transform = Transform3D(10, 0, 0, 0, 0.1, 0, 0, 0, 10, 0, 0, 0)

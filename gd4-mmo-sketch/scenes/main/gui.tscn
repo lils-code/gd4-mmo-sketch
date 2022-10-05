@@ -1,12 +1,52 @@
-[gd_scene load_steps=2 format=3 uid="uid://bpil0nlemgdgi"]
+[gd_scene load_steps=4 format=3 uid="uid://bpil0nlemgdgi"]
 
 [ext_resource type="Script" path="res://scenes/main/show fps.gd" id="1_nbves"]
+[ext_resource type="Script" path="res://scenes/main/gui.gd" id="1_rda7r"]
+[ext_resource type="PackedScene" uid="uid://cphbmugnsurqd" path="res://scenes/instances/target panel.tscn" id="2_jvgio"]
 
 [node name="gui" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource("1_rda7r")
 
-[node name="show fps" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="show_fps" type="Label" parent="."]
+offset_left = 907.0
+offset_top = 8.0
+offset_right = 982.0
+offset_bottom = 31.0
 script = ExtResource("1_nbves")
+
+[node name="target_panel" parent="." instance=ExtResource("2_jvgio")]
+visible = false
+anchor_left = 0.254
+anchor_top = 0.025
+anchor_right = 0.474
+anchor_bottom = 0.175
+offset_left = -0.0960083
+offset_right = 149.408
+offset_bottom = 60.0
+scale = Vector2(0.6, 0.6)
+metadata/_edit_layout_mode = 1
+
+[node name="character_panel" parent="." instance=ExtResource("2_jvgio")]
+anchor_left = 0.015
+anchor_top = 0.025
+anchor_right = 0.234
+anchor_bottom = 0.175
+offset_left = -0.360001
+offset_right = 150.168
+offset_bottom = 60.0
+scale = Vector2(0.6, 0.6)
+metadata/_edit_layout_mode = 1
+
+[node name="target target" parent="." instance=ExtResource("2_jvgio")]
+visible = false
+anchor_left = 0.015
+anchor_top = 0.025
+anchor_right = 0.234
+anchor_bottom = 0.175
+offset_left = 474.64
+offset_right = 625.168
+offset_bottom = 60.0
+scale = Vector2(0.421, 0.421)
+metadata/_edit_layout_mode = 1
