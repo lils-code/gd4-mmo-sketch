@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://bf1ggosfvjdv3"]
+[gd_scene load_steps=3 format=3 uid="uid://bf1ggosfvjdv3"]
 
 [ext_resource type="Script" path="res://scenes/instances/visible.gd" id="1_dtmtp"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_axp2p"]
+
 [node name="visible" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_axp2p")
 script = ExtResource("1_dtmtp")

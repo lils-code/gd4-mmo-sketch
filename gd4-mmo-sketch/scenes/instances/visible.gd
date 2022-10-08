@@ -2,7 +2,8 @@ extends MeshInstance3D
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _init():
+	print('here')
 	pass # Replace with function bo
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

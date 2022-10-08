@@ -198,6 +198,11 @@ _global_script_classes=[{
 "class": &"WallShaper",
 "language": &"GDScript",
 "path": "res://addons/MeshShaper/Shapers/base/WallShaper.gd"
+}, {
+"base": "Area3D",
+"class": &"targetable",
+"language": &"GDScript",
+"path": "res://scenes/instances/targetable.gd"
 }]
 _global_script_class_icons={
 "BasicBlock": "",
@@ -237,7 +242,8 @@ _global_script_class_icons={
 "WallBevelShaper": "",
 "WallBuilder": "",
 "WallMeshShaper": "",
-"WallShaper": ""
+"WallShaper": "",
+"targetable": ""
 }
 
 [application]

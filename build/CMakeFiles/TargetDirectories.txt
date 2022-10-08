@@ -1,0 +1,3 @@
+/home/lil/git/gd4-mmo-sketch/build/CMakeFiles/rebuild_cache.dir
+/home/lil/git/gd4-mmo-sketch/build/CMakeFiles/edit_cache.dir
+/home/lil/git/gd4-mmo-sketch/build/CMakeFiles/godot-cpp.dir

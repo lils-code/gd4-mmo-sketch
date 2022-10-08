@@ -1,7 +1,9 @@
+class_name targetable
 extends Area3D
 
 @export_node_path var target
 @export_node_path(CollisionShape3D) var shape
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
