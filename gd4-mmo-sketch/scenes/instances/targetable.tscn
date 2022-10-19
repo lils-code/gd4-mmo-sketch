@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmg6jwu6js2v2"]
-
-[ext_resource type="Script" path="res://scenes/instances/targetable.gd" id="1_csjsj"]
-
-[node name="targetable" type="Area3D"]
-collision_layer = 4
-collision_mask = 8
-script = ExtResource("1_csjsj")

@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "${workspaceFolder}/godot-cpp"
+    "cmake.sourceDirectory": "${workspaceFolder}/godot-cpp",
+    "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -1,19 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxr34m0js07qo"]
+[gd_scene load_steps=6 format=3 uid="uid://cxr34m0js07qo"]
 
 [ext_resource type="PackedScene" uid="uid://b2awq5n5qvtqo" path="res://scenes/main/player.tscn" id="1_quoq5"]
-[ext_resource type="PackedScene" uid="uid://camvcri7e11vi" path="res://addons/devblocks/blocks/colored_block.tscn" id="3_tcquj"]
+[ext_resource type="PackedScene" uid="uid://bxxwothq6vvhd" path="res://scenes/main/entity.tscn" id="2_sx1e5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8w0nj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1554p"]
+albedo_color = Color(0.145098, 0.196078, 0.247059, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_85umg"]
+material = SubResource("StandardMaterial3D_1554p")
 
 [node name="Node" type="Node"]
 
 [node name="player" parent="." instance=ExtResource("1_quoq5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
-
-[node name="ColoredBlock" parent="." instance=ExtResource("3_tcquj")]
-transform = Transform3D(10, 0, 0, 0, 0.1, 0, 0, 0, 10, 0, 0, 0)
-disable_mode = 1
-collision_layer = 65535
-collision_mask = 65535
+collision_mask = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
 shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(20, 0, 0, 0, 0.1, 0, 0, 0, 20, 0, 0, 0)
+shape = SubResource("BoxShape3D_8w0nj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_85umg")
+
+[node name="entity" parent="." instance=ExtResource("2_sx1e5")]
+
+[node name="targetable" type="Node" parent="."]

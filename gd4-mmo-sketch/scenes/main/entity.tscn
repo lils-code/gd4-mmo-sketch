@@ -1,8 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://8ukw2pkmh647"]
+[gd_scene load_steps=2 format=3 uid="uid://bxxwothq6vvhd"]
 
-[ext_resource type="Script" path="res://scenes/instances/visible.gd" id="1_iokjy"]
-[ext_resource type="Script" path="res://scenes/main/entity.gd" id="1_wkn3d"]
+[ext_resource type="Script" path="res://scenes/main/entity.gd" id="1_dd5s1"]
 
-[node name="entity" type="Node3D"]
-visible = ExtResource("1_iokjy")
-script = ExtResource("1_wkn3d")
+[node name="entity" type="Node"]
+script = ExtResource("1_dd5s1")

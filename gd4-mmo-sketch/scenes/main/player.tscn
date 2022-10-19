@@ -1,17 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2awq5n5qvtqo"]
+[gd_scene load_steps=4 format=3 uid="uid://b2awq5n5qvtqo"]
 
 [ext_resource type="Script" path="res://scenes/main/player.gd" id="1_mc4xt"]
 [ext_resource type="PackedScene" uid="uid://bpil0nlemgdgi" path="res://scenes/main/gui.tscn" id="2_rt0oq"]
-[ext_resource type="PackedScene" uid="uid://cmg6jwu6js2v2" path="res://scenes/instances/targetable.tscn" id="3_sbdgi"]
-[ext_resource type="PackedScene" uid="uid://bf1ggosfvjdv3" path="res://scenes/instances/visible.tscn" id="3_ykb6u"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_3thbx"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_nwhgc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8il0v"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4gw7f"]
 
 [node name="player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -21,22 +13,8 @@ script = ExtResource("1_mc4xt")
 [node name="gui" parent="." instance=ExtResource("2_rt0oq")]
 mouse_filter = 1
 
-[node name="visible_cap" parent="." instance=ExtResource("3_ykb6u")]
-mesh = SubResource("CapsuleMesh_3thbx")
-
-[node name="visible_box" parent="." instance=ExtResource("3_ykb6u")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.5, -0.5)
-mesh = SubResource("BoxMesh_nwhgc")
-
 [node name="collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_8il0v")
-
-[node name="targetable" parent="." instance=ExtResource("3_sbdgi")]
-target = NodePath("..")
-
-[node name="target_shape" type="CollisionShape3D" parent="targetable"]
-transform = Transform3D(1.333, 0, 0, 0, 1.333, 0, 0, 0, 1.333, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_4gw7f")
 
 [node name="cam_center" type="Position3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
