@@ -11,7 +11,7 @@ func _apply_changes() -> void:
 	print('saved')
 
 func _enter_tree():
-	add_custom_type('entity', 'Node', entity_class, icon)
+	add_custom_type('entity', 'Node3D', entity_class, icon)
 
 func _exit_tree():
 	remove_custom_type('entity')

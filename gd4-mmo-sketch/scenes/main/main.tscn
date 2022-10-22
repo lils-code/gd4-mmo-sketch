@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxr34m0js07qo"]
+[gd_scene load_steps=6 format=3 uid="uid://cxr34m0js07qo"]
 
 [ext_resource type="PackedScene" uid="uid://b2awq5n5qvtqo" path="res://scenes/main/player.tscn" id="1_quoq5"]
+[ext_resource type="Script" path="res://addons/entity_creation/entity.gd" id="2_m31gq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8w0nj"]
 
@@ -28,3 +29,6 @@ shape = SubResource("BoxShape3D_8w0nj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
 mesh = SubResource("BoxMesh_85umg")
+
+[node name="entity" type="Node3D" parent="."]
+script = ExtResource("2_m31gq")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbb8euyegckks"]
+
+[ext_resource type="Script" path="res://scenes/entity_properties/visible.gd" id="1_3i3gl"]
+
+[node name="visible" type="MeshInstance3D"]
+script = ExtResource("1_3i3gl")
