@@ -21,6 +21,10 @@ window/vsync/vsync_mode=0
 window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/entity_creation/plugin.cfg")
+
 [input]
 
 ui_cancel={
