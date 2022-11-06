@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxr34m0js07qo"]
+[gd_scene load_steps=8 format=3 uid="uid://cxr34m0js07qo"]
 
 [ext_resource type="PackedScene" uid="uid://b2awq5n5qvtqo" path="res://scenes/main/player.tscn" id="1_quoq5"]
-[ext_resource type="Script" path="res://addons/entity_creation/entity.gd" id="2_m31gq"]
+[ext_resource type="Script" path="res://addons/entity_creation/entity.gd" id="2_gk1i1"]
+[ext_resource type="PackedScene" uid="uid://bbb8euyegckks" path="res://scenes/entity_properties/visible.tscn" id="3_bp2of"]
+[ext_resource type="Script" path="res://scenes/entity_properties/visible.gd" id="4_1fi2r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8w0nj"]
 
@@ -31,4 +33,22 @@ shape = SubResource("BoxShape3D_8w0nj")
 mesh = SubResource("BoxMesh_85umg")
 
 [node name="entity" type="Node3D" parent="."]
-script = ExtResource("2_m31gq")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -4)
+script = ExtResource("2_gk1i1")
+flags = 1
+
+[node name="visible" type="MeshInstance3D" parent="entity" instance=ExtResource("3_bp2of")]
+script = ExtResource("4_1fi2r")
+use_as_static_collider = true
+
+[node name="static" type="StaticBody3D" parent="entity/visible"]
+
+[node name="entity2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -4)
+script = ExtResource("2_gk1i1")
+flags = 1
+
+[node name="visible" parent="entity2" instance=ExtResource("3_bp2of")]
+use_as_static_collider = true
+
+[node name="@static@43327" type="StaticBody3D" parent="entity2/visible"]

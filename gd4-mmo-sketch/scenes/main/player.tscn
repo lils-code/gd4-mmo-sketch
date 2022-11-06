@@ -1,9 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2awq5n5qvtqo"]
+[gd_scene load_steps=5 format=3 uid="uid://b2awq5n5qvtqo"]
 
 [ext_resource type="Script" path="res://scenes/main/player.gd" id="1_mc4xt"]
 [ext_resource type="PackedScene" uid="uid://bpil0nlemgdgi" path="res://scenes/main/gui.tscn" id="2_rt0oq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8il0v"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dmupf"]
 
 [node name="player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -11,12 +13,16 @@ collision_mask = 32768
 script = ExtResource("1_mc4xt")
 
 [node name="gui" parent="." instance=ExtResource("2_rt0oq")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 1
 
 [node name="collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_8il0v")
 
-[node name="cam_center" type="Position3D" parent="."]
+[node name="cam_center" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="arm" type="SpringArm3D" parent="cam_center"]
@@ -25,3 +31,6 @@ spring_length = 5.0
 
 [node name="camera" type="Camera3D" parent="cam_center/arm"]
 fov = 90.0
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_dmupf")
